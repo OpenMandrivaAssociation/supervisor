@@ -1,0 +1,5 @@
+sources:
+  "supervisor-3.0a10.tar.gz:"	b743e10221964c327ae7335c59ab70b43261f545
+  "supervisord.conf:"	184370e7a00884a408ec5007be9c3671f4f110e6
+  "supervisord.init:"	d9fd8f40735f41835db0e87cb96dd63a6485c37b
+  "supervisor.logrotate:"	326bf92f67c178a032d9dcf38b274c51e71618e2

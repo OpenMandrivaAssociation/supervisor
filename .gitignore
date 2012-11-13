@@ -1,0 +1,4 @@
+supervisor-3.0a10.tar.gz
+supervisord.conf
+supervisord.init
+supervisor.logrotate
