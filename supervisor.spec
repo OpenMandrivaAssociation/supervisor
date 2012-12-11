@@ -74,3 +74,10 @@ fi
 %config(noreplace) %{_sysconfdir}/supervisord.conf
 %dir %{_sysconfdir}/supervisord.d
 %config(noreplace) %{_sysconfdir}/logrotate.d/supervisor
+
+
+%changelog
+* Tue Nov 01 2011 Alexander Khrukin <akhrukin@mandriva.org> 3.0-1mdv2012.0
++ Revision: 709304
+- imported package supervisor
+
