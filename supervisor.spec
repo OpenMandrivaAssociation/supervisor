@@ -1,13 +1,16 @@
 Summary:	A System for Allowing the Control of Process State on UNIX
 Name:		supervisor
-Version:	3.0
-%define		prever a10
-Release:	2
+#Version:	3.0
+Version:	4.0
+%define		prever 20180710
+Release:	1
 
 License:	ZPLv2.1 and BSD and MIT
 Group:		System/Base
 URL:		http://supervisord.org
 Source0:	http://pypi.python.org/packages/source/s/%{name}/%{name}-%{version}%{?prever}.tar.gz
+#Source0:	http://pypi.python.org/packages/source/s/%{name}/%{name}-%{version}.tar.gz
+#git archive --prefix=supervisor-4.0`date +%Y%m%d`/ -o supervisor-4.0`date +%Y%m%d`.tar.gz HEAD
 Source1:	supervisord.init
 Source2:	supervisord.conf
 Source3:	supervisor.logrotate
@@ -63,7 +66,7 @@ fi
 
 %files
 %defattr(-,root,root,-)
-%doc README.txt LICENSES.txt TODO.txt CHANGES.txt COPYRIGHT.txt
+%doc README.rst LICENSES.txt CHANGES.txt COPYRIGHT.txt
 %dir %{_localstatedir}/log/%{name}
 %{_initrddir}/supervisord
 %{python_sitelib}/*
