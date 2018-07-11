@@ -15,7 +15,7 @@ Source2:        supervisor.logrotate
 Source3:	supervisord.service
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildArch:	noarch
-BuildRequires:	pkgconfig(python)
+BuildRequires:	pkgconfig(python3)
 BuildRequires:  python-setuptools
 BuildRequires:	systemd
 
