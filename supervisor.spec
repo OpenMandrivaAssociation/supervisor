@@ -1,6 +1,5 @@
 Summary:	A System for Allowing the Control of Process State on UNIX
 Name:		supervisor
-#Version:	3.0
 Version:	4.0
 %define		prever 20180710
 Release:	1
