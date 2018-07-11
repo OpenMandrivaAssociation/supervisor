@@ -17,13 +17,14 @@ Source2:        supervisor.logrotate
 Source3:	supervisord.service
 BuildRoot:	%{_tmppath}/%{name}-%{version}-%{release}-root
 BuildArch:	noarch
-BuildRequires:	python-devel
-BuildRequires:	python-setuptools
+BuildRequires:	pkgconfig(python)
+BuildRequires:	systemd
+#BuildRequires:	python-setuptools
 
 Requires:	python-meld3 >= 0.6.5
 Requires:	python-setuptools
 Requires(preun): /bin/systemctl
-Requires(postun): /bin/systemctl
+#Requires(postun): /bin/systemctl
 
 
 %description
@@ -48,26 +49,14 @@ mkdir -p %{buildroot}/lib/systemd/system
 chmod 770 %{buildroot}/%{_localstatedir}/log/%{name}
 install -p -m 644 %{SOURCE1} %{buildroot}/%{_sysconfdir}/supervisord.conf
 install -p -m 644 %{SOURCE2} %{buildroot}/%{_sysconfdir}/logrotate.d/supervisor
-install -p -m 644 %{SOURCE3} %{buildroot}/lib/systemd/system/supervisord.service
+install -p -m 644 %{SOURCE3} %{buildroot}/%{_systemunitdir}/supervisord.service
+install -d %{buildroot}%{_presetdir}
+cat > %{buildroot}%{_presetdir}/86-%{name}.preset << EOF
+enable supervisord.service
+EOF
 
 sed -i s'/^#!.*//' $( find %{buildroot}/%{python_sitelib}/supervisor/ -type f)
 
-rm -rf %{buildroot}/%{python_sitelib}/supervisor/meld3/
-rm -f %{buildroot}%{_prefix}/doc/*.txt
-
-%clean
-rm -rf %{buildroot}
-
-%post
-/bin/systemctl enable %{name}d || :
-/bin/systemctl start %{name}d || :
-
-%preun
-if [ $1 = 0 ]; then
-    /bin/systemctl stop supervisord > /dev/null 2>&1 || :
-    /bin/systemctl disable  %{name}d || :
-    /bin/rm -f /lib/systemd/system/supervisord.service
-fi
 
 %files
 %defattr(-,root,root,-)
@@ -77,15 +66,10 @@ fi
 %{_bindir}/supervisor*
 %{_bindir}/echo_supervisord_conf
 %{_bindir}/pidproxy
-/lib/systemd/system/supervisord.service
+%{_systemunitdir}/supervisord.service
+%{_presetdir}/86-supervisor.preset
 
 %config(noreplace) %{_sysconfdir}/supervisord.conf
 %dir %{_sysconfdir}/supervisord.d
 %config(noreplace) %{_sysconfdir}/logrotate.d/supervisor
-
-
-%changelog
-* Tue Nov 01 2011 Alexander Khrukin <akhrukin@mandriva.org> 3.0-1mdv2012.0
-+ Revision: 709304
-- imported package supervisor
 
