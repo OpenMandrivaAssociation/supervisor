@@ -1,13 +1,13 @@
 Summary:	A System for Allowing the Control of Process State on UNIX
 Name:		supervisor
-Version:	4.0
+Version:	4.2.4
 %define		prever 20180710
 Release:	1
 
 License:	ZPLv2.1 and BSD and MIT
 Group:		System/Base
 URL:		http://supervisord.org
-Source0:	http://pypi.python.org/packages/source/s/%{name}/%{name}-%{version}%{?prever}.tar.gz
+Source0:	http://pypi.python.org/packages/source/s/%{name}/%{name}-%{version}.tar.gz
 #git archive --prefix=supervisor-4.0`date +%Y%m%d`/ -o supervisor-4.0`date +%Y%m%d`.tar.gz HEAD
 #Source1:	supervisord.init
 Source1:	supervisord.conf
@@ -29,7 +29,7 @@ The supervisor is a client/server system that allows its users to control a
 number of processes on UNIX-like operating systems.
 
 %prep
-%setup -q -n %{name}-%{version}%{?prever}
+%setup -q -n %{name}-%{version}
 
 %build
 CFLAGS="%{optflags}" %{__python} setup.py build
@@ -42,11 +42,11 @@ mkdir -p %{buildroot}/%{_sysconfdir}/supervisord.d
 mkdir -p %{buildroot}/%{_sysconfdir}/logrotate.d/
 mkdir -p %{buildroot}/%{_initrddir}
 mkdir -p %{buildroot}/%{_localstatedir}/log/%{name}
-mkdir -p %{buildroot}/lib/systemd/system
+mkdir -p %{buildroot}/%{_unitdir}
 chmod 770 %{buildroot}/%{_localstatedir}/log/%{name}
 install -p -m 644 %{SOURCE1} %{buildroot}/%{_sysconfdir}/supervisord.conf
 install -p -m 644 %{SOURCE2} %{buildroot}/%{_sysconfdir}/logrotate.d/supervisor
-install -p -m 644 %{SOURCE3} %{buildroot}/%{_systemunitdir}/supervisord.service
+install -p -m 644 %{SOURCE3} %{buildroot}/%{_unitdir}/supervisord.service
 install -d %{buildroot}%{_presetdir}
 cat > %{buildroot}%{_presetdir}/86-%{name}.preset << EOF
 enable supervisord.service
@@ -57,13 +57,13 @@ sed -i s'/^#!.*//' $( find %{buildroot}/%{python_sitelib}/supervisor/ -type f)
 
 %files
 %defattr(-,root,root,-)
-%doc README.rst LICENSES.txt CHANGES.txt COPYRIGHT.txt
+%doc README.rst LICENSES.txt COPYRIGHT.txt
 %dir %{_localstatedir}/log/%{name}
 %{python_sitelib}/*
 %{_bindir}/supervisor*
 %{_bindir}/echo_supervisord_conf
 %{_bindir}/pidproxy
-%{_systemunitdir}/supervisord.service
+%{_unitdir}/supervisord.service
 %{_presetdir}/86-supervisor.preset
 
 %config(noreplace) %{_sysconfdir}/supervisord.conf
