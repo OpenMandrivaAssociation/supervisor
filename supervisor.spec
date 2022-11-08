@@ -19,7 +19,7 @@ BuildRequires:	pkgconfig(python)
 BuildRequires:  python-setuptools
 BuildRequires:	systemd
 
-Requires:	python-meld3 >= 0.6.5
+#Requires:	python-meld3 >= 0.6.5
 Requires:	python-setuptools
 Requires(preun): /bin/systemctl
 
