@@ -6,7 +6,7 @@ Release:	1
 
 License:	ZPLv2.1 and BSD and MIT
 Group:		System/Base
-URL:		http://supervisord.org
+URL:		https://supervisord.org
 Source0:	http://pypi.python.org/packages/source/s/%{name}/%{name}-%{version}.tar.gz
 #git archive --prefix=supervisor-4.0`date +%Y%m%d`/ -o supervisor-4.0`date +%Y%m%d`.tar.gz HEAD
 #Source1:	supervisord.init
